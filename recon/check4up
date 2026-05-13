@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+new_urls() {
+	local url=$2
+	local new_url="view-source:$url"
+	echo $new_url
+}
+
+mapfile -t -C new_urls -c 1 sites < $1
