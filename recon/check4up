@@ -1,9 +1,25 @@
 #!/usr/bin/env bash
 
-new_urls() {
-	local url=$2
-	local new_url="view-source:$url"
-	echo $new_url
+lookup() {
+	local keywords=("usr" "user" "username" "admin" "root" "pass" "passwd" "password")
+	local url_regex='^https?://[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(/.*)?$'
+
+	while read -r url; do
+	    # Skip blank lines, comments, and invalid URLs
+	    [[ -z "$url" ]] && continue
+	    [[ "$url" == \#* ]] && continue
+	    [[ "$url" =~ $url_regex ]] || { printf '\e[38;5;1m[SKIPPED]\e[0m not a valid URL: %s\n' "$url"; continue; }
+
+	    printf '\e[38;5;6m[in progress] %s\e[0m\n' "$url"
+	    result=$(curl -s "$url")
+	    
+	    for keyword in "${keywords[@]}"; do
+		if echo "$result" | grep -qEi "\b$keyword\b"; then
+		    printf '\e[38;5;2m[SUCCESS]\e[0m keyword \e[38;5;3m%s\e[0m found\n' "$keyword"
+		fi
+	    done
+	    printf '\n'
+	done
 }
 
-mapfile -t -C new_urls -c 1 sites < $1
+lookup < "$1"
