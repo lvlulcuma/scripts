@@ -15,10 +15,10 @@ lookup() {
 	    
 	    for keyword in "${keywords[@]}"; do
 		if echo "$result" | grep -qEi "\b$keyword\b"; then
-		    printf '\e[38;5;2m[SUCCESS]\e[0m keyword \e[38;5;3m%s\e[0m found\n' "$keyword"
+		    printf '\e[38;5;2m[SUCCESS]\e[0m \e[38;5;3m%s\e[0m \n' "$keyword"
 		fi
 	    done
-	    printf '\n'
+	    #printf '\n'
 	done
 }
 
