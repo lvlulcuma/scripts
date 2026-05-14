@@ -2,7 +2,7 @@
 
 lookup() {
 	local keywords=("usr" "user" "username" "admin" "root" "pass" "passwd" "password")
-	local url_regex='^https?://[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(/.*)?$'
+	local url_regex='^https?://[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(:[0-9]{1,5})?(/.*)?$'
 
 	while read -r url; do
 	    # Skip blank lines, comments, and invalid URLs
